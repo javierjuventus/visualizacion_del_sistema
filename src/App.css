@@ -1,25 +1,76 @@
-body {
-   background-color: black;
-   display: flex;
-   justify-content: center;
+/* Diseño general */
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #003366, #0066cc);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  transition: all 0.3s ease;
 }
-.container {
-   display: block;
-   width: 500px;
-   margin-top: 120px;
+
+.titulo {
+  font-size: 2.2rem;
+  margin-bottom: 25px;
 }
-.title {
-   text-align: center;
-   color: white;
+
+/* Campos de entrada */
+input {
+  padding: 10px;
+  width: 260px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  text-align: center;
+  margin-bottom: 10px;
 }
-.new-task {
-   display: block;
-   width: 100%;
-   background-color: azure;
-   border-radius: 10px;
-   height: 40px;
-   border-color: aquamarine;
-   border-width: 4px;
-   text-align: center;
-   font-size: 24px;
+
+.botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Botones */
+button {
+  background-color: #fff;
+  color: #003366;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+button.registro {
+  background-color: #004080;
+  color: #fff;
+}
+
+button.registro:hover {
+  background-color: #002f5e;
+}
+
+.mensaje {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Pie de página */
+footer {
+  position: absolute;
+  bottom: 10px;
+  font-size: 14px;
+  opacity: 0.8;
 }
