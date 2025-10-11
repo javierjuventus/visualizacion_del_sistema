@@ -1,14 +1,15 @@
 /* Diseño general */
 .App {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   background: linear-gradient(135deg, #003366, #0066cc);
   font-family: 'Poppins', sans-serif;
   color: #fff;
+  padding: 20px 10px 40px;
   transition: all 0.3s ease;
 }
 
@@ -29,12 +30,6 @@ input {
   margin-bottom: 10px;
 }
 
-.botones {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
 /* Botones */
 button {
   background-color: #fff;
@@ -46,6 +41,7 @@ button {
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s;
+  margin: 5px 5px 5px 0;
 }
 
 button:hover {
@@ -53,24 +49,93 @@ button:hover {
 }
 
 button.registro {
-  background-color: #004080;
+  background-color: #002f5e;
   color: #fff;
 }
 
 button.registro:hover {
-  background-color: #002f5e;
+  background-color: #001f3e;
 }
 
 .mensaje {
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 18px;
   font-weight: 500;
 }
 
+/* Navegación post-login */
+nav {
+  margin-bottom: 20px;
+}
+
+nav button {
+  margin-right: 10px;
+}
+
+nav button.active {
+  background-color: #002f5e;
+  color: #fff;
+}
+
+button.logout {
+  background-color: #990000;
+  color: white;
+  margin-left: 15px;
+}
+
+button.logout:hover {
+  background-color: #cc0000;
+}
+
+/* Main container */
+main {
+  width: 100%;
+  max-width: 600px;
+}
+
 /* Pie de página */
 footer {
-  position: absolute;
-  bottom: 10px;
+  margin-top: auto;
   font-size: 14px;
   opacity: 0.8;
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+/* Formulario de Solicitud */
+.formulario-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+select,
+textarea {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  text-align: left;
+}
+
+textarea {
+  resize: none;
+}
+
+.formulario button {
+  width: 200px;
 }
