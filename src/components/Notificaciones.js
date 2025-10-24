@@ -9,3 +9,4 @@ function Notificaciones({ notificaciones }) {
 }
 
 export default Notificaciones;
+

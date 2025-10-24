@@ -1,0 +1,94 @@
+.panel-interno {
+  width: 95%;
+  max-width: 1200px; /* 🔹 más ancho */
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 30px 40px;
+  border-radius: 20px;
+  margin: 30px auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  overflow-x: visible; /* 🔹 evita barra horizontal */
+}
+
+
+.panel-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabla-container {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.tabla th,
+.tabla td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tabla th {
+  background-color: rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+}
+
+.tabla tr:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.tabla select,
+.tabla input {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tabla input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-contenido {
+  background: #003366;
+  padding: 25px;
+  border-radius: 15px;
+  color: #fff;
+  width: 90%;
+  max-width: 500px;
+  text-align: left;
+}
+
+.modal-contenido h3 {
+  margin-bottom: 10px;
+}
+
+.modal-contenido ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.modal-contenido li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}

@@ -90,7 +90,8 @@ button.logout:hover {
 /* Main container */
 main {
   width: 100%;
-  max-width: 600px;
+  max-width: 1600px; /* 🔹 permite espacio suficiente */
+  margin: 0 auto;
 }
 
 /* Pie de página */
@@ -139,3 +140,4 @@ textarea {
 .formulario button {
   width: 200px;
 }
+
