@@ -4,22 +4,20 @@ import "./App.css";
 import FormularioSolicitud from "./components/FormularioSolicitud";
 import AcuseRecibo from "./components/AcuseRecibo";
 import SeguimientoSolicitudes from "./components/SeguimientoSolicitudes";
-import PanelInterno from "./components/PanelInterno";
 import Notificaciones from "./components/Notificaciones";
+import ChatAyuda from "./components/ChatAyuda";
+import Sugerencias from "./components/Sugerencias"; // Módulo ciudadanos
+import PanelInterno from "./components/PanelInterno"; // Módulo admin
+import PanelSolicitudes from "./components/PanelSolicitudes"; // Módulo admin
 
 function App() {
-  // Estados para login y mensajes
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState("");
-
-  // Estado para usuario autenticado (null o nombre usuario)
+  const [rol, setRol] = useState("ciudadano");
   const [usuarioLogueado, setUsuarioLogueado] = useState(null);
-
-  // Estado para navegar entre vistas tras login
   const [vista, setVista] = useState("formulario");
 
-  // Estado global para solicitudes, notificaciones, acuse
   const [solicitudes, setSolicitudes] = useState([
     {
       id: 1,
@@ -36,18 +34,22 @@ function App() {
   ]);
   const [notificaciones, setNotificaciones] = useState([]);
   const [acuse, setAcuse] = useState(null);
+  const [sugerencias, setSugerencias] = useState([]);
 
   useEffect(() => {
     console.log("✅ Aplicación cargada correctamente");
   }, []);
 
+  // === Funciones de login ===
   const handleLogin = () => {
     if (usuario.trim() === "" || password.trim() === "") {
       setMensaje("⚠️ Por favor, ingresa usuario y contraseña.");
+    } else if (!rol) {
+      setMensaje("⚠️ Selecciona tu tipo de usuario.");
     } else {
-      setMensaje(`✅ Bienvenido, ${usuario}`);
+      setMensaje(`✅ Bienvenido, ${usuario} (${rol})`);
       setUsuarioLogueado(usuario);
-      setVista("formulario");
+      setVista(rol === "admin" ? "panelInterno" : "formulario");
     }
   };
 
@@ -63,8 +65,11 @@ function App() {
     setVista("formulario");
     setAcuse(null);
     setNotificaciones([]);
+    setSugerencias([]);
+    setRol("ciudadano");
   };
 
+  // === Funciones de solicitudes ===
   const enviarSolicitud = (solicitud) => {
     const nuevaSolicitud = {
       id: Date.now(),
@@ -90,13 +95,21 @@ function App() {
     ]);
   };
 
+  // === Función para manejar sugerencias ===
+  const enviarSugerencia = (sugerencia) => {
+    setSugerencias((prev) => [...prev, sugerencia]);
+    setNotificaciones((prev) => [
+      ...prev,
+      `Nueva sugerencia recibida de ${sugerencia.nombre}`,
+    ]);
+  };
+
+  // === LOGIN VIEW ===
   if (!usuarioLogueado) {
-    // Mostrar login con tu estilo original
     return (
       <div className="App">
         <h1 className="titulo">Bienvenido a Ventanilla Única</h1>
 
-        {/* Campos de inicio de sesión */}
         <input
           type="text"
           placeholder="Usuario"
@@ -111,6 +124,20 @@ function App() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
+        <select
+          value={rol}
+          onChange={(e) => setRol(e.target.value)}
+          style={{
+            marginTop: "10px",
+            padding: "8px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
+        >
+          <option value="ciudadano">Ciudadano</option>
+          <option value="admin">Administrador</option>
+        </select>
+
         <div className="botones">
           <button onClick={handleLogin}>Iniciar sesión</button>
           <button className="registro" onClick={handleRegister}>
@@ -123,11 +150,13 @@ function App() {
         <footer>
           <p>Delegación Benito Juárez</p>
         </footer>
+
+        <ChatAyuda />
       </div>
     );
   }
 
-  // App post-login con navegación entre módulos
+  // === APP POST LOGIN ===
   return (
     <div className="App">
       <h1 className="titulo">
@@ -135,24 +164,46 @@ function App() {
       </h1>
 
       <nav>
-        <button
-          onClick={() => setVista("formulario")}
-          className={vista === "formulario" ? "active" : ""}
-        >
-          Solicitar Trámite
-        </button>
-        <button
-          onClick={() => setVista("seguimiento")}
-          className={vista === "seguimiento" ? "active" : ""}
-        >
-          Seguimiento
-        </button>
-        <button
-          onClick={() => setVista("panel")}
-          className={vista === "panel" ? "active" : ""}
-        >
-          Panel Interno
-        </button>
+        {rol === "ciudadano" && (
+          <>
+            <button
+              onClick={() => setVista("formulario")}
+              className={vista === "formulario" ? "active" : ""}
+            >
+              Solicitar Trámite
+            </button>
+            <button
+              onClick={() => setVista("seguimiento")}
+              className={vista === "seguimiento" ? "active" : ""}
+            >
+              Seguimiento
+            </button>
+            <button
+              onClick={() => setVista("sugerencias")}
+              className={vista === "sugerencias" ? "active" : ""}
+            >
+              Sugerencias
+            </button>
+          </>
+        )}
+
+        {rol === "admin" && (
+          <>
+            <button
+              onClick={() => setVista("panelInterno")}
+              className={vista === "panelInterno" ? "active" : ""}
+            >
+              Panel Interno
+            </button>
+            <button
+              onClick={() => setVista("panelSolicitudes")}
+              className={vista === "panelSolicitudes" ? "active" : ""}
+            >
+              Panel de Solicitudes
+            </button>
+          </>
+        )}
+
         <button onClick={handleLogout} className="logout">
           Cerrar sesión
         </button>
@@ -161,11 +212,29 @@ function App() {
       <Notificaciones notificaciones={notificaciones} />
 
       <main>
-        {vista === "formulario" && <FormularioSolicitud onEnviar={enviarSolicitud} />}
-        {vista === "acuse" && acuse && <AcuseRecibo solicitud={acuse} />}
-        {vista === "seguimiento" && <SeguimientoSolicitudes solicitudes={solicitudes} />}
-        {vista === "panel" && (
-          <PanelInterno solicitudes={solicitudes} onActualizarEstado={actualizarEstado} />
+        {/* Ciudadanos */}
+        {rol === "ciudadano" && vista === "formulario" && (
+          <FormularioSolicitud onEnviar={enviarSolicitud} />
+        )}
+        {rol === "ciudadano" && vista === "acuse" && acuse && (
+          <AcuseRecibo solicitud={acuse} />
+        )}
+        {rol === "ciudadano" && vista === "seguimiento" && (
+          <SeguimientoSolicitudes solicitudes={solicitudes} />
+        )}
+        {rol === "ciudadano" && vista === "sugerencias" && (
+          <Sugerencias onEnviarSugerencia={enviarSugerencia} />
+        )}
+
+        {/* Administradores */}
+        {rol === "admin" && vista === "panelInterno" && (
+          <PanelInterno
+            solicitudes={solicitudes}
+            onActualizarEstado={actualizarEstado}
+          />
+        )}
+        {rol === "admin" && vista === "panelSolicitudes" && (
+          <PanelSolicitudes solicitudes={solicitudes} />
         )}
       </main>
 

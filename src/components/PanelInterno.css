@@ -7,9 +7,8 @@
   margin: 40px auto; /* Centrado horizontal */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 
-  /* Añadimos para forzar centrado en caso de problemas */
   display: block;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 .panel-filtros {
@@ -30,19 +29,29 @@
   color: #fff;
 }
 
+/* Estilo de celdas */
 .tabla th,
 .tabla td {
   padding: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Cabecera */
 .tabla th {
   background-color: rgba(255, 255, 255, 0.1);
   font-weight: bold;
 }
 
-.tabla tr:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+/* Fondo inicial para todas las filas (thead y tbody) */
+.tabla thead tr,
+.tabla tbody tr {
+  background-color: rgba(0, 123, 255, 0.3); /* azul inicial */
+}
+
+/* Hover uniforme para todas las filas */
+.tabla thead tr:hover,
+.tabla tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.5); /* azul más intenso al pasar el cursor */
 }
 
 .tabla select,
